@@ -142,6 +142,7 @@ export function PostForm({ boardId, mode, threadId, threadPubkey }: PostFormProp
         }
 
         await createReply({
+          boardId,
           threadId,
           threadPubkey,
           content: content.trim(),

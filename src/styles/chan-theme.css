@@ -257,6 +257,13 @@
   margin-left: 20px;
   border-left: 1px solid var(--chan-post-border);
   padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chan-replies .chan-post {
+  display: block;
+  max-width: 600px;
 }
 
 /* Thread divider */

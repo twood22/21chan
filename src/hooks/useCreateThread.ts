@@ -59,8 +59,11 @@ export function useCreateThread() {
         ['client', '21chan'],
       ];
 
-      // Include image URL in content so all clients render it
-      const fullContent = content ? `${content}\n\n${imageUrl}` : imageUrl;
+      // Include image URL and board tag in content for visibility in other clients
+      const boardTag = `[/${board.id}/ - 21chan]`;
+      const fullContent = content
+        ? `${content}\n\n${imageUrl}\n\n${boardTag}`
+        : `${imageUrl}\n\n${boardTag}`;
 
       console.log('[useCreateThread] Signing event with tags:', tags);
       const event = await signer.signEvent({
@@ -119,6 +122,7 @@ export function useCreateThread() {
 }
 
 interface CreateReplyParams {
+  boardId: string;
   threadId: string;
   threadPubkey: string;
   content: string;
@@ -140,6 +144,7 @@ export function useCreateReply() {
 
   return useMutation({
     mutationFn: async ({
+      boardId,
       threadId,
       threadPubkey,
       content,
@@ -183,10 +188,13 @@ export function useCreateReply() {
         tags.push(['imeta', ...imetaParts]);
       }
 
-      // Include image URL in content so all clients render it
-      const fullContent = imageUrl
-        ? (content ? `${content}\n\n${imageUrl}` : imageUrl)
-        : content;
+      // Include image URL and board tag in content for visibility in other clients
+      const boardTag = `[/${boardId}/ - 21chan]`;
+      let fullContent = content;
+      if (imageUrl) {
+        fullContent = content ? `${content}\n\n${imageUrl}` : imageUrl;
+      }
+      fullContent = fullContent ? `${fullContent}\n\n${boardTag}` : boardTag;
 
       const event = await signer.signEvent({
         kind: 1, // Standard text note for maximum compatibility
