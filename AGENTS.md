@@ -52,7 +52,7 @@ src/
 ```json
 {
   "kind": 1,
-  "content": "Post text\n\nhttps://blossom.example.com/image.jpg",
+  "content": "Post text\n\nhttps://blossom.example.com/image.jpg\n\n[/btc/ - 21chan]",
   "tags": [
     ["subject", "Thread Subject"],
     ["imeta", "url https://...", "m image/jpeg"],
@@ -61,6 +61,8 @@ src/
   ]
 }
 ```
+
+Note: Content includes image URL and board tag `[/board/ - 21chan]` for visibility in other clients.
 
 ### Replies (Kind 1 with NIP-10 threading)
 ```json
@@ -94,6 +96,13 @@ Boards are defined in `src/lib/boards.ts`:
 2. **Logged-in mode**: Uses Nostr extension or nsec
 
 The `getActiveSigner()` function in ChanContext returns the appropriate signer.
+
+## Cross-Client Compatibility
+
+Posts are standard Kind 1 notes visible in any Nostr client:
+- **Primal**, **Damus**, **Snort**, **Coracle**, etc.
+- Replies made from other clients appear in 21chan threads
+- External links use `nevent` encoding via njump.me
 
 ## Key Files
 
