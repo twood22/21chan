@@ -25,6 +25,30 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				// 21chan imageboard colors
+				chan: {
+					bg: 'var(--chan-bg)',
+					'bg-alt': 'var(--chan-bg-alt)',
+					'post-bg': 'var(--chan-post-bg)',
+					'post-bg-highlight': 'var(--chan-post-bg-highlight)',
+					'post-border': 'var(--chan-post-border)',
+					text: 'var(--chan-text)',
+					'text-muted': 'var(--chan-text-muted)',
+					link: 'var(--chan-link)',
+					'link-hover': 'var(--chan-link-hover)',
+					quote: 'var(--chan-quote)',
+					subject: 'var(--chan-subject)',
+					name: 'var(--chan-name)',
+					btc: 'var(--chan-btc)',
+					'btc-dark': 'var(--chan-btc-dark)',
+					'btc-light': 'var(--chan-btc-light)',
+					'header-bg': 'var(--chan-header-bg)',
+					'header-border': 'var(--chan-header-border)',
+					'input-bg': 'var(--chan-input-bg)',
+					'input-border': 'var(--chan-input-border)',
+					'button-bg': 'var(--chan-button-bg)',
+					'button-border': 'var(--chan-button-border)',
+				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
@@ -90,6 +114,9 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out'
+			},
+			fontFamily: {
+				chan: ['Arial', 'Helvetica', 'sans-serif'],
 			}
 		}
 	},

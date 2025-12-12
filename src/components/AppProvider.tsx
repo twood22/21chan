@@ -52,6 +52,30 @@ export function AppProvider(props: AppProviderProps) {
     setConfig(updater);
   };
 
+  // Migrate old relay configs to new reliable relays (runs once on mount)
+  useEffect(() => {
+    const currentRelays = rawConfig.relayMetadata?.relays;
+    if (!currentRelays) return;
+
+    const hasOldRelays = currentRelays.some(r =>
+      r.url.includes('relay.nostr.bg') ||
+      r.url.includes('relay.snort.social') ||
+      r.url.includes('relay.ditto.pub')
+    );
+    const missingNewRelays = !currentRelays.some(r =>
+      r.url.includes('relay.primal.net') || r.url.includes('nos.lol')
+    );
+
+    if (hasOldRelays || missingNewRelays) {
+      // Reset to default relays
+      setConfig(current => ({
+        ...current,
+        relayMetadata: defaultConfig.relayMetadata,
+      }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount - intentionally ignoring deps
+
   const config = { ...defaultConfig, ...rawConfig };
 
   const appContextValue: AppContextType = {

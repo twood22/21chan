@@ -1,0 +1,282 @@
+/* 21chan - Classic imageboard theme */
+
+:root {
+  /* 4chan Yotsuba B (Blue) inspired theme */
+  --chan-bg: #eef2ff;
+  --chan-bg-alt: #d6daf0;
+  --chan-post-bg: #d6daf0;
+  --chan-post-bg-highlight: #d6bad0;
+  --chan-post-border: #b7c5d9;
+  --chan-text: #000000;
+  --chan-text-muted: #707070;
+  --chan-link: #34345c;
+  --chan-link-hover: #dd0000;
+  --chan-quote: #789922;
+  --chan-subject: #0f0c5d;
+  --chan-name: #117743;
+  --chan-name-anon: #117743;
+  --chan-tripcode: #228854;
+  --chan-deadlink: #808080;
+  --chan-spoiler-bg: #000000;
+  --chan-spoiler-text: #000000;
+
+  /* Bitcoin accent */
+  --chan-btc: #f7931a;
+  --chan-btc-dark: #c27214;
+  --chan-btc-light: #fbb03b;
+
+  /* Header */
+  --chan-header-bg: #d6daf0;
+  --chan-header-border: #b7c5d9;
+
+  /* Forms */
+  --chan-input-bg: #ffffff;
+  --chan-input-border: #aaaaaa;
+  --chan-button-bg: #f0e0d6;
+  --chan-button-border: #c0a080;
+}
+
+/* Dark mode - Tomorrow Night inspired */
+.dark {
+  --chan-bg: #1d1f21;
+  --chan-bg-alt: #282a2e;
+  --chan-post-bg: #282a2e;
+  --chan-post-bg-highlight: #3a3d42;
+  --chan-post-border: #373b41;
+  --chan-text: #c5c8c6;
+  --chan-text-muted: #707880;
+  --chan-link: #81a2be;
+  --chan-link-hover: #cc6666;
+  --chan-quote: #b5bd68;
+  --chan-subject: #81a2be;
+  --chan-name: #b5bd68;
+  --chan-name-anon: #b5bd68;
+  --chan-tripcode: #8abeb7;
+  --chan-deadlink: #707880;
+  --chan-spoiler-bg: #c5c8c6;
+  --chan-spoiler-text: #c5c8c6;
+
+  /* Bitcoin accent stays the same */
+  --chan-btc: #f7931a;
+  --chan-btc-dark: #c27214;
+  --chan-btc-light: #fbb03b;
+
+  /* Header */
+  --chan-header-bg: #282a2e;
+  --chan-header-border: #373b41;
+
+  /* Forms */
+  --chan-input-bg: #1d1f21;
+  --chan-input-border: #373b41;
+  --chan-button-bg: #373b41;
+  --chan-button-border: #4a4d52;
+}
+
+/* Imageboard-specific styles */
+.chan-post {
+  display: inline-block;
+  background-color: var(--chan-post-bg);
+  border: 1px solid var(--chan-post-border);
+  padding: 8px;
+  margin: 4px 0;
+}
+
+.chan-post.highlight {
+  background-color: var(--chan-post-bg-highlight);
+}
+
+.chan-greentext {
+  color: var(--chan-quote);
+}
+
+.chan-subject {
+  color: var(--chan-subject);
+  font-weight: bold;
+}
+
+.chan-name {
+  color: var(--chan-name);
+  font-weight: bold;
+}
+
+.chan-tripcode {
+  color: var(--chan-tripcode);
+}
+
+.chan-postnum {
+  color: var(--chan-link);
+}
+
+.chan-postnum:hover {
+  color: var(--chan-link-hover);
+}
+
+.chan-deadlink {
+  color: var(--chan-deadlink);
+  text-decoration: line-through;
+}
+
+.chan-quotelink {
+  color: var(--chan-link);
+  text-decoration: underline;
+}
+
+.chan-quotelink:hover {
+  color: var(--chan-link-hover);
+}
+
+/* Spoiler text */
+.chan-spoiler {
+  background-color: var(--chan-spoiler-bg);
+  color: var(--chan-spoiler-text);
+}
+
+.chan-spoiler:hover {
+  color: var(--chan-text);
+}
+
+/* File info */
+.chan-fileinfo {
+  font-size: 11px;
+  color: var(--chan-text-muted);
+}
+
+/* Catalog styles */
+.chan-catalog-thread {
+  display: inline-block;
+  width: 180px;
+  max-height: 320px;
+  vertical-align: top;
+  margin: 2px;
+  padding: 5px;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+}
+
+.chan-catalog-thumb {
+  max-width: 150px;
+  max-height: 150px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+.chan-catalog-stats {
+  font-size: 11px;
+  color: var(--chan-text-muted);
+}
+
+.chan-catalog-excerpt {
+  font-size: 12px;
+  color: var(--chan-text);
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 100px;
+}
+
+/* Board header */
+.chan-board-header {
+  background-color: var(--chan-header-bg);
+  border-bottom: 1px solid var(--chan-header-border);
+  padding: 8px;
+  text-align: center;
+}
+
+.chan-board-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--chan-text);
+  font-family: 'Tahoma', sans-serif;
+}
+
+.chan-board-subtitle {
+  font-size: 11px;
+  color: var(--chan-text-muted);
+}
+
+/* Navigation */
+.chan-nav {
+  background-color: var(--chan-header-bg);
+  border-bottom: 1px solid var(--chan-header-border);
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.chan-nav a {
+  color: var(--chan-link);
+  margin: 0 4px;
+}
+
+.chan-nav a:hover {
+  color: var(--chan-link-hover);
+}
+
+/* Post form */
+.chan-form {
+  background-color: var(--chan-post-bg);
+  border: 1px solid var(--chan-post-border);
+  padding: 8px;
+  margin: 8px auto;
+  display: inline-block;
+}
+
+.chan-form input[type="text"],
+.chan-form textarea {
+  background-color: var(--chan-input-bg);
+  border: 1px solid var(--chan-input-border);
+  padding: 2px 4px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+}
+
+.chan-form input[type="submit"],
+.chan-form button {
+  background-color: var(--chan-button-bg);
+  border: 1px solid var(--chan-button-border);
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.chan-form input[type="submit"]:hover,
+.chan-form button:hover {
+  background-color: var(--chan-bg-alt);
+}
+
+/* Bitcoin-specific accents */
+.chan-btc-accent {
+  color: var(--chan-btc);
+}
+
+.chan-zap-count {
+  color: var(--chan-btc);
+  font-weight: bold;
+}
+
+/* Reply container */
+.chan-replies {
+  margin-left: 20px;
+  border-left: 1px solid var(--chan-post-border);
+  padding-left: 10px;
+}
+
+/* Thread divider */
+.chan-thread-divider {
+  border-top: 1px solid var(--chan-post-border);
+  margin: 10px 0;
+}
+
+/* Sticky/pinned indicator */
+.chan-sticky {
+  color: var(--chan-btc);
+  font-size: 12px;
+}
+
+/* Anonymous badge */
+.chan-anon-badge {
+  background-color: var(--chan-name);
+  color: white;
+  font-size: 10px;
+  padding: 1px 4px;
+  border-radius: 2px;
+  margin-left: 4px;
+}
