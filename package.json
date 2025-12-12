@@ -1,7 +1,8 @@
 {
-  "name": "mkstack",
+  "name": "21chan",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Bitcoin-focused imageboard on Nostr",
   "type": "module",
   "scripts": {
     "dev": "npm i --silent && vite",

@@ -70,7 +70,7 @@ export default function HomePage() {
 
         {/* Footer */}
         <div className="text-center py-4 text-xs text-chan-text-muted">
-          <p>Powered by Nostr | NIP-68 Picture Events | NIP-22 Comments</p>
+          <p>Powered by Nostr | Kind 1 Notes | NIP-22 Comments</p>
         </div>
       </div>
     </div>

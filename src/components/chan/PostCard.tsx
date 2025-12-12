@@ -8,6 +8,12 @@ import { ImageViewer } from './ImageViewer';
 import { TipButton } from './TipButton';
 import { useAuthor } from '@/hooks/useAuthor';
 import { ExternalLink } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 interface PostCardProps {
   event: NostrEvent;
@@ -95,42 +101,40 @@ export function PostCard({
         {/* Tip Button */}
         <TipButton event={event} />
 
-        {/* External Link - dropdown with multiple viewers */}
+        {/* External Link - click-based dropdown with Nostr viewers */}
         {njumpUrl && (
-          <div className="relative group">
-            <button
-              className="text-chan-link hover:text-chan-link-hover inline-flex items-center gap-0.5"
-              title="View on Nostr"
-            >
+          <DropdownMenu>
+            <DropdownMenuTrigger className="text-chan-link hover:text-chan-link-hover inline-flex items-center outline-none">
               <ExternalLink className="w-3 h-3" />
-            </button>
-            <div className="absolute left-0 top-full mt-1 bg-chan-post-bg border border-chan-post-border shadow-lg rounded text-xs z-50 hidden group-hover:block min-w-[100px]">
-              <a
-                href={njumpUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block px-2 py-1 hover:bg-chan-bg-alt"
-              >
-                njump.me
-              </a>
-              <a
-                href={`https://satellite.earth/thread/${event.id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block px-2 py-1 hover:bg-chan-bg-alt"
-              >
-                satellite.earth
-              </a>
-              <a
-                href={`https://nostr.band/?q=${event.id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block px-2 py-1 hover:bg-chan-bg-alt"
-              >
-                nostr.band
-              </a>
-            </div>
-          </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="bg-chan-post-bg border-chan-post-border min-w-[120px]">
+              <DropdownMenuItem asChild className="text-xs cursor-pointer">
+                <a href={njumpUrl} target="_blank" rel="noopener noreferrer">
+                  njump.me
+                </a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="text-xs cursor-pointer">
+                <a href={`https://primal.net/e/${njumpUrl.split('/').pop()}`} target="_blank" rel="noopener noreferrer">
+                  primal.net
+                </a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="text-xs cursor-pointer">
+                <a href={`https://snort.social/e/${njumpUrl.split('/').pop()}`} target="_blank" rel="noopener noreferrer">
+                  snort.social
+                </a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="text-xs cursor-pointer">
+                <a href={`https://coracle.social/${njumpUrl.split('/').pop()}`} target="_blank" rel="noopener noreferrer">
+                  coracle.social
+                </a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="text-xs cursor-pointer">
+                <a href={`https://nostr.band/?q=${event.id}`} target="_blank" rel="noopener noreferrer">
+                  nostr.band
+                </a>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         )}
       </div>
 

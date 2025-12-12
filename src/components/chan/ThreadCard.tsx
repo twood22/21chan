@@ -50,12 +50,12 @@ export function ThreadCard({ thread, boardId }: ThreadCardProps) {
         <span className="font-bold">R: {replyCount}</span>
         {njumpUrl && (
           <a
-            href={njumpUrl}
+            href={`https://primal.net/e/${njumpUrl.split('/').pop()}`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
             className="text-chan-link hover:text-chan-link-hover"
-            title="View on njump.me"
+            title="View on Primal"
           >
             <ExternalLink className="w-3 h-3" />
           </a>

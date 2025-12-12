@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useChanContext } from '@/hooks/useChanContext';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useLoginActions } from '@/hooks/useLoginActions';
+import { useAuthor } from '@/hooks/useAuthor';
 import { eventIdToPostNumber } from '@/lib/postNumber';
 import {
   DropdownMenu,
@@ -24,6 +25,10 @@ export function IdentitySwitcher() {
     getActivePubkey,
   } = useChanContext();
   const { logout } = useLoginActions();
+
+  // Fetch logged-in user's profile
+  const { data: authorData } = useAuthor(user?.pubkey);
+  const displayName = authorData?.metadata?.name || authorData?.metadata?.display_name;
 
   const [showLoginDialog, setShowLoginDialog] = useState(false);
 
@@ -48,7 +53,7 @@ export function IdentitySwitcher() {
         ) : (
           <>
             <User className="w-3 h-3" />
-            <span>ID: {shortPubkey}</span>
+            <span>{displayName || `ID: ${shortPubkey}`}</span>
           </>
         )}
       </DropdownMenuTrigger>
@@ -79,7 +84,7 @@ export function IdentitySwitcher() {
           >
             <User className="w-3 h-3 mr-2" />
             <div>
-              <div className="font-medium">Logged In</div>
+              <div className="font-medium">{displayName || 'Logged In'}</div>
               <div className="text-chan-text-muted text-[10px]">
                 ID: {eventIdToPostNumber(user.pubkey)}
               </div>
@@ -105,7 +110,7 @@ export function IdentitySwitcher() {
             className="text-xs cursor-pointer text-red-600"
           >
             <LogOut className="w-3 h-3 mr-2" />
-            Log out
+            Log out {displayName ? `@${displayName}` : ''}
           </DropdownMenuItem>
         ) : (
           <DropdownMenuItem

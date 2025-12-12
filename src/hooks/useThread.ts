@@ -76,12 +76,12 @@ export function useThread(threadId: string) {
         }
       }
 
-      // Fetch all replies (Kind 1111 comments referencing this thread)
+      // Fetch all replies (Kind 1 notes referencing this thread via NIP-10 e tags)
       const replies = await nostr.query(
         [
           {
-            kinds: [1111],
-            '#E': [threadId],
+            kinds: [1],
+            '#e': [threadId],
           },
         ],
         { signal: abortSignal }

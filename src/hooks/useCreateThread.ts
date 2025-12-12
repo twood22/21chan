@@ -155,17 +155,21 @@ export function useCreateReply() {
         throw new Error('No signer available');
       }
 
+      // Use NIP-10 standard threading tags for maximum compatibility
       const tags: string[][] = [
-        // Root thread reference (uppercase tags per NIP-22)
-        ['E', threadId],
-        ['K', '1'],
-        ['P', threadPubkey],
-        // Direct parent reference (lowercase tags)
-        ['e', replyToId ?? threadId],
-        ['k', replyToId ? '1111' : '1'],
-        ['p', replyToPubkey ?? threadPubkey],
+        // Root reference (the original thread OP)
+        ['e', threadId, '', 'root'],
+        // Reply reference (what we're directly replying to)
+        ['e', replyToId ?? threadId, '', replyToId ? 'reply' : 'root'],
+        // Tag the thread author
+        ['p', threadPubkey],
         ['client', '21chan'],
       ];
+
+      // Tag the reply author if replying to a specific reply
+      if (replyToPubkey && replyToPubkey !== threadPubkey) {
+        tags.push(['p', replyToPubkey]);
+      }
 
       // Add image if provided
       if (imageUrl && imageMimeType) {
@@ -185,7 +189,7 @@ export function useCreateReply() {
         : content;
 
       const event = await signer.signEvent({
-        kind: 1111,
+        kind: 1, // Standard text note for maximum compatibility
         content: fullContent,
         tags,
         created_at: Math.floor(Date.now() / 1000),

@@ -99,8 +99,8 @@ export function useThreads(boardId: string, options: UseThreadsOptions = {}) {
         const replies = await nostr.query(
           [
             {
-              kinds: [1111],
-              '#E': threadIds,
+              kinds: [1],
+              '#e': threadIds,
             },
           ],
           { signal: abortSignal }
@@ -111,7 +111,9 @@ export function useThreads(boardId: string, options: UseThreadsOptions = {}) {
         const lastActivityMap = new Map<string, number>();
 
         for (const reply of replies) {
-          const rootId = reply.tags.find(([name]) => name === 'E')?.[1];
+          // Find the root tag (NIP-10 format: ["e", "<id>", "", "root"])
+          const rootTag = reply.tags.find(([name, , , marker]) => name === 'e' && marker === 'root');
+          const rootId = rootTag?.[1];
           if (rootId) {
             replyCountMap.set(rootId, (replyCountMap.get(rootId) ?? 0) + 1);
             const current = lastActivityMap.get(rootId) ?? 0;
