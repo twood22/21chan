@@ -110,10 +110,21 @@ npm run build
 
 PRs welcome! This is an open source project.
 
+## Built With
+
+21chan is built on [MKStack](https://github.com/soapbox-pub/mkstack) - a complete framework for building Nostr clients with React, TailwindCSS, and Nostrify. MKStack provides the authentication, relay management, zaps, file uploads, and UI components that power this app.
+
+If you want to build your own Nostr application, check out MKStack:
+
+```bash
+npm install -g @getstacks/stacks
+stacks mkstack
+```
+
 ## License
 
 MIT
 
 ---
 
-*Built on Nostr. Powered by Bitcoin.*
+*Built on Nostr. Powered by Bitcoin. Made with [MKStack](https://github.com/soapbox-pub/mkstack).*
