@@ -348,7 +348,11 @@ export function ZapDialog({ target, children, className }: ZapDialogProps) {
     zap,
   };
 
-  if (!user || user.pubkey === target.pubkey || !author?.metadata?.lud06 && !author?.metadata?.lud16) {
+  // Hide if: user is zapping themselves, or author has no Lightning address
+  const isSelf = user && user.pubkey === target.pubkey;
+  const hasLightning = author?.metadata?.lud06 || author?.metadata?.lud16;
+
+  if (isSelf || !hasLightning) {
     return null;
   }
 

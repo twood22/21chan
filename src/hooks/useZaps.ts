@@ -138,16 +138,6 @@ export function useZaps(
     setIsZapping(true);
     setInvoice(null); // Clear any previous invoice at the start
 
-    if (!user) {
-      toast({
-        title: 'Login required',
-        description: 'You must be logged in to send a zap.',
-        variant: 'destructive',
-      });
-      setIsZapping(false);
-      return;
-    }
-
     if (!actualTarget) {
       toast({
         title: 'Event not found',
@@ -192,31 +182,39 @@ export function useZaps(
         return;
       }
 
-      // Create zap request - use appropriate event format based on kind
-      // For addressable events (30000-39999), pass the object to get 'a' tag
-      // For all other events, pass the ID string to get 'e' tag
-      const event = (actualTarget.kind >= 30000 && actualTarget.kind < 40000)
-        ? actualTarget
-        : actualTarget.id;
-
       const zapAmount = amount * 1000; // convert to millisats
 
-      const zapRequest = nip57.makeZapRequest({
-        profile: actualTarget.pubkey,
-        event: event,
-        amount: zapAmount,
-        relays: config.relayMetadata.relays.map(r => r.url),
-        comment
-      });
+      // Build the LNURL callback URL
+      // If user is logged in, create a signed zap request (NIP-57 zap)
+      // If anonymous, just do a simple LNURL-pay tip (no zap receipt)
+      let callbackUrl = `${zapEndpoint}?amount=${zapAmount}`;
 
-      // Sign the zap request (but don't publish to relays - only send to LNURL endpoint)
-      if (!user.signer) {
-        throw new Error('No signer available');
+      if (user && user.signer) {
+        // Create zap request - use appropriate event format based on kind
+        // For addressable events (30000-39999), pass the object to get 'a' tag
+        // For all other events, pass the ID string to get 'e' tag
+        const event = (actualTarget.kind >= 30000 && actualTarget.kind < 40000)
+          ? actualTarget
+          : actualTarget.id;
+
+        const zapRequest = nip57.makeZapRequest({
+          profile: actualTarget.pubkey,
+          event: event,
+          amount: zapAmount,
+          relays: config.relayMetadata.relays.map(r => r.url),
+          comment
+        });
+
+        // Sign the zap request (but don't publish to relays - only send to LNURL endpoint)
+        const signedZapRequest = await user.signer.signEvent(zapRequest);
+        callbackUrl += `&nostr=${encodeURIComponent(JSON.stringify(signedZapRequest))}`;
+      } else if (comment) {
+        // For anonymous tips, we can still include a comment if the LNURL server supports it
+        callbackUrl += `&comment=${encodeURIComponent(comment)}`;
       }
-      const signedZapRequest = await user.signer.signEvent(zapRequest);
 
       try {
-        const res = await fetch(`${zapEndpoint}?amount=${zapAmount}&nostr=${encodeURI(JSON.stringify(signedZapRequest))}`);
+        const res = await fetch(callbackUrl);
             const responseData = await res.json();
 
             if (!res.ok) {
